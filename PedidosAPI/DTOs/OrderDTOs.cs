@@ -1,0 +1,34 @@
+﻿namespace PedidosAPI.DTOs
+{
+    // DTO para criar um novo pedido (POST)
+    public class CreateOrderDto
+    {
+        public string CustomerName { get; set; } = string.Empty;
+        public List<CreateOrderItemDto> Items { get; set; } = new List<CreateOrderItemDto>();
+    }
+
+    public class CreateOrderItemDto
+    {
+        public string ProductName { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+
+    // DTO para resposta do faturamento por dia (Dapper)
+    public class DailyRevenueDto
+    {
+        public DateTime Date { get; set; }
+        public decimal TotalRevenue { get; set; }
+        public int TotalOrders { get; set; }
+    }
+
+    // DTO de resposta paginada
+    public class PagedResultDto<T>
+    {
+        public List<T> Items { get; set; } = new List<T>();
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; set; }
+        public int TotalPages => (int)Math.Ceiling((double)TotalItems / PageSize);
+    }
+}
