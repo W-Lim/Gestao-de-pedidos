@@ -1,10 +1,16 @@
 # 🤖 AI Notes — Relatório de Uso da Inteligência Artificial
 
-Este documento descreve como as ferramentas de IA assistida (Google IA Studio) foram utilizadas durante o desenvolvimento deste desafio técnico.
+Este documento descreve como as ferramentas de IA assistida foram utilizadas durante o desenvolvimento deste desafio técnico.
 
 ---
 
-## 1. Onde a IA Ajudou (Ganhos de Produtividade)
+## 1. Artefato de Engenharia de Contexto (`AGENTS.md`)
+Para garantir a padronização e qualidade no uso de ferramentas de IA (Cursor, Copilot, ChatGPT), foi criado na raiz do projeto o arquivo **`AGENTS.md`**. 
+Ele define formalmente as convenções de arquitetura, estilos de código C#/React/Node, nomenclatura em PascalCase/camelCase, padrões do DbContext e regras de implementação que a IA deve respeitar rigidamente ao gerar ou refatorar código neste repositório.
+
+---
+
+## 2. Onde a IA Ajudou (Ganhos de Produtividade)
 - **Geração do Seed de Dados:** A IA auxiliou no setup da biblioteca `Bogus` no `DbInitializer.cs` para popular 5.000 pedidos e itens fictícios realistas com cálculo automático de totalizadores.
 - **Boilerplate e Estilização do React:** Aceleração na criação da interface em React com tabelas de listagem, paginação, componentes expansíveis (Accordion) e formulários dinâmicos.
 - **Microserviço em Node.js:** Geração do servidor Express em Node.js e Dockerfile para o serviço de notificações de pedidos.
@@ -12,7 +18,7 @@ Este documento descreve como as ferramentas de IA assistida (Google IA Studio) f
 
 ---
 
-## 2. Onde a IA Errou e Foi Necessário Intervir (Ajustes Técnicos de Senioridade)
+## 3. Onde a IA Errou e Foi Necessário Intervir (Ajustes Técnicos de Senioridade)
 - **Compatibilidade de Pacotes do .NET 6:** A IA sugeriu instalar as versões mais recentes dos pacotes do EF Core (v10.0), que romperam com a versão target .NET 6. Corrigi manualmente especificando as versões LTS compatíveis (`6.0.22`).
 - **Otimização do SQL no Dapper:** A IA sugeriu fazer a agregação do faturamento trazendo os dados para a memória da aplicação C# (.NET). Corrigi o código instruindo a realização do `GROUP BY` e `SUM` diretamente na consulta SQL nativa no banco de dados.
 - **Mapeamento de Fusohorário no PostgreSQL:** Na inserção em lote, o driver `Npgsql` rejeitou os objetos `DateTime` gerados pelo Bogus devido ao `DateTimeKind.Local`. Ativei a flag `Npgsql.EnableLegacyTimestampBehavior` no `Program.cs` e converti os campos para UTC (`.ToUniversalTime()`).
@@ -20,7 +26,7 @@ Este documento descreve como as ferramentas de IA assistida (Google IA Studio) f
 
 ---
 
-## 3. O que foi Decidido e Feito À Mão
+## 4. O que foi Decidido e Feito À Mão
 - **Escolha da Arquitetura C#:** Decisão de utilizar Controllers tradicionais em vez de Minimal APIs para maior clareza nas rotas e manutenibilidade.
 - **Indexação de Performance:** Criação manual do Índice no campo `OrderDate` via EF Core (`OnModelCreating`) para garantir consultas sub-segundo no faturamento diário.
 - **Separação Estratégica das Ferramentas de Banco:** 
