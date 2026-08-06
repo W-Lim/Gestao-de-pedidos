@@ -26,7 +26,7 @@ Você pode executar o projeto de duas formas: **via Docker** (recomendado, 1 com
 #### Passo a Passo
 1. No terminal, acesse a pasta raiz do projeto:
    ```bash
-   cd desafio-pedidos
+   cd Gestao-de-pedidos
    ```
 
 2. Execute o comando para construir e subir todos os containers:
@@ -119,3 +119,11 @@ A aplicação conta com um **Microserviço em Node.js (Express)** totalmente int
 - `docker-compose.yml`: Orquestrador dos 4 containers (Postgres, API .NET, Web React, Node.js).
 - `AGENTS.md`: Guia de padronização, convenções e regras de contexto para Inteligência Artificial.
 - `AI_NOTES.md`: Relatório sobre o fluxo de trabalho com Inteligência Artificial.
+  
+---
+
+##  O que faria com mais tempo (Melhorias Futuras)
+
+1. **Testes Automatizados:** Adicionaria testes unitários e de integração com xUnit e Moq no .NET, e Vitest/Testing Library no React.
+2. **Mensageria Real (RabbitMQ):** Substituiria o disparo HTTP síncrono para o microserviço Node.js por uma fila assíncrona com RabbitMQ ou Redis Pub/Sub.
+3. **Autenticação e Autorização:** Implementaria JWT (JSON Web Tokens) para proteger as rotas da API.
