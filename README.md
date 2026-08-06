@@ -14,7 +14,7 @@ A aplicação está totalmente containerizada usando **Docker Compose**. Com ape
 ### Passo a Passo
 1. Clone o repositório e acesse a pasta raiz:
    ```bash
-   cd desafio-pedidos
+   cd Gestao-de-pedidos
    ```
 
 2. Execute o comando para subir todo o ecossistema:
