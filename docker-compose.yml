@@ -41,5 +41,13 @@ services:
     depends_on:
       - backend
 
+  microservice:
+    build:
+      context: ./microservice
+      dockerfile: Dockerfile
+    container_name: pedidos-microservice
+    ports:
+      - "4000:4000"
+
 volumes:
   postgres_data:

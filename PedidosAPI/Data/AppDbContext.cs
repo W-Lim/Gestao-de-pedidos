@@ -17,7 +17,6 @@ namespace PedidosAPI.Data
             base.OnModelCreating(modelBuilder);
 
             // Criando um Índice na coluna OrderDate.
-            // Isso faz a busca por período (faturamento) ser instantânea mesmo com milhares de registros!
             modelBuilder.Entity<Order>()
                 .HasIndex(o => o.OrderDate);
         }

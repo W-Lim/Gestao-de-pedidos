@@ -1,6 +1,5 @@
 ﻿namespace PedidosAPI.DTOs
 {
-    // DTO para criar um novo pedido (POST)
     public class CreateOrderDto
     {
         public string CustomerName { get; set; } = string.Empty;
@@ -14,7 +13,6 @@
         public decimal UnitPrice { get; set; }
     }
 
-    // DTO para resposta do faturamento por dia (Dapper)
     public class DailyRevenueDto
     {
         public DateTime Date { get; set; }
@@ -22,7 +20,6 @@
         public int TotalOrders { get; set; }
     }
 
-    // DTO de resposta paginada
     public class PagedResultDto<T>
     {
         public List<T> Items { get; set; } = new List<T>();

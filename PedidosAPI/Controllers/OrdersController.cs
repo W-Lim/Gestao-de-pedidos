@@ -21,7 +21,7 @@ namespace PedidosAPI.Controllers
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // 1. LISTAR PEDIDOS PAGINADO (EF Core com AsNoTracking)
+        // LISTAR PEDIDOS PAGINADO
         [HttpGet]
         public async Task<ActionResult<PagedResultDto<Order>>> GetOrders([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
@@ -49,7 +49,7 @@ namespace PedidosAPI.Controllers
             return Ok(result);
         }
 
-        // 2. FATURAMENTO POR PERÍODO (Dapper com SQL Direto Otimizado)
+        // FATURAMENTO POR PERÍODO
         [HttpGet("revenue")]
         public async Task<ActionResult<IEnumerable<DailyRevenueDto>>> GetRevenue([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
@@ -57,7 +57,6 @@ namespace PedidosAPI.Controllers
             var start = startDate.Date;
             var end = endDate.Date.AddDays(1).AddTicks(-1);
 
-            // Query SQL direta agregando por dia
             var sql = @"
                 SELECT 
                     CAST(""OrderDate"" AS DATE) as Date,
@@ -74,7 +73,7 @@ namespace PedidosAPI.Controllers
             return Ok(revenueData);
         }
 
-        // 3. CRIAR PEDIDO (EF Core)
+        // CRIAR PEDIDO
         [HttpPost]
         public async Task<ActionResult<Order>> CreateOrder([FromBody] CreateOrderDto dto)
         {
@@ -95,11 +94,30 @@ namespace PedidosAPI.Controllers
                 }).ToList()
             };
 
-            // Calcula o valor total no backend para segurança
             order.TotalAmount = order.Items.Sum(i => i.Quantity * i.UnitPrice);
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
+
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    using var httpClient = new HttpClient();
+                    var notificationPayload = new
+                    {
+                        orderId = order.Id,
+                        customerName = order.CustomerName,
+                        totalAmount = order.TotalAmount
+                    };
+
+                    await httpClient.PostAsJsonAsync("http://microservice:4000/api/notifications", notificationPayload);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[AVISO] Não foi possível conectar ao microserviço Node.js: {ex.Message}");
+                }
+            });
 
             return CreatedAtAction(nameof(GetOrders), new { id = order.Id }, order);
         }
