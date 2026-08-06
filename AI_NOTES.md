@@ -18,7 +18,7 @@ Ele define formalmente as convenções de arquitetura, estilos de código C#/Rea
 
 ---
 
-## 3. Onde a IA Errou e Foi Necessário Intervir (Ajustes Técnicos de Senioridade)
+## 3. Onde a IA Errou e Foi Necessário Intervir
 - **Compatibilidade de Pacotes do .NET 6:** A IA sugeriu instalar as versões mais recentes dos pacotes do EF Core (v10.0), que romperam com a versão target .NET 6. Corrigi manualmente especificando as versões LTS compatíveis (`6.0.22`).
 - **Otimização do SQL no Dapper:** A IA sugeriu fazer a agregação do faturamento trazendo os dados para a memória da aplicação C# (.NET). Corrigi o código instruindo a realização do `GROUP BY` e `SUM` diretamente na consulta SQL nativa no banco de dados.
 - **Mapeamento de Fusohorário no PostgreSQL:** Na inserção em lote, o driver `Npgsql` rejeitou os objetos `DateTime` gerados pelo Bogus devido ao `DateTimeKind.Local`. Ativei a flag `Npgsql.EnableLegacyTimestampBehavior` no `Program.cs` e converti os campos para UTC (`.ToUniversalTime()`).
