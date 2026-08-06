@@ -62,3 +62,11 @@ A aplicação conta com um **Microserviço em Node.js (Express)** totalmente int
 - `/microservice`: Microserviço em Node.js (Express) para Notificações.
 - `docker-compose.yml`: Orquestrador dos 4 containers (Postgres, API .NET, Web React, Node.js).
 - `AI_NOTES.md`: Relatório sobre o fluxo de trabalho com Inteligência Artificial.
+  
+---
+
+##  O que faria com mais tempo (Melhorias Futuras)
+
+1. **Testes Automatizados:** Adicionaria testes unitários e de integração com xUnit e Moq no .NET, e Vitest/Testing Library no React.
+2. **Mensageria Real (RabbitMQ):** Substituiria o disparo HTTP síncrono para o microserviço Node.js por uma fila assíncrona com RabbitMQ ou Redis Pub/Sub.
+3. **Autenticação e Autorização:** Implementaria JWT (JSON Web Tokens) para proteger as rotas da API.
